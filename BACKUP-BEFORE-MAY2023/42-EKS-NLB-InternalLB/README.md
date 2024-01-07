@@ -215,7 +215,7 @@ Go to Services -> EC2 -> Instances -> hr-dev-BastionHost -> Instance State -> St
 
 # Connect to Bastion Host
 ssh -i <PRIVATE_KEY> ec2-user@<BASTION-HOST-PublicIP>
-ssh -i ../01-ekscluster-terraform-manifests/private-key/eks-terraform-key.pem ec2-user@54.90.160.218
+ssh -i ../01-ekscluster-terraform-manifests/private-key/prometheus.pem ec2-user@54.90.160.218
 
 # NSLOOKUP Internal Network LB DNS
 nslookup lbc-network-lb-internal-d34ab3da5f17aea1.elb.us-east-1.amazonaws.com
@@ -225,7 +225,7 @@ curl lbc-network-lb-internal-d34ab3da5f17aea1.elb.us-east-1.amazonaws.com
 Observation: Should work
 
 ## Sample Output
-Kalyans-MacBook-Pro:06-nlb-internal-terraform-manifests kdaida$ ssh -i ../01-ekscluster-terraform-manifests/private-key/eks-terraform-key.pem ec2-user@54.90.160.218
+Kalyans-MacBook-Pro:06-nlb-internal-terraform-manifests kdaida$ ssh -i ../01-ekscluster-terraform-manifests/private-key/prometheus.pem ec2-user@54.90.160.218
 Last login: Tue May 17 01:14:58 2022 from 124.123.191.44
 
        __|  __|_  )

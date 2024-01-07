@@ -37,7 +37,7 @@ resource "aws_eks_node_group" "eks_ng_public" {
   
   
   remote_access {
-    ec2_ssh_key = "eks-terraform-key"
+    ec2_ssh_key = "prometheus"
   }
 
   scaling_config {
@@ -90,7 +90,7 @@ resource "aws_eks_node_group" "eks_ng_private" {
   
   
   remote_access {
-    ec2_ssh_key = "eks-terraform-key"    
+    ec2_ssh_key = "prometheus"    
   }
 
   scaling_config {
@@ -326,7 +326,7 @@ variable "environment" {
 variable "business_divsion" {
   description = "Business Division in the large organization this Infrastructure belongs"
   type = string
-  default = "SAP"
+  default = "Inboxable"
 }
 ```
 

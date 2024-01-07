@@ -2,7 +2,7 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   #version = "4.0.1"    
-  version = "5.4.0"    
+  version = "~> 5.4.0"    
 
   # VPC Basic Details
   name = "${local.name}-${var.vpc_name}"

@@ -164,7 +164,7 @@ variable "environment" {
 variable "business_divsion" {
   description = "Business Division in the large organization this Infrastructure belongs"
   type = string
-  default = "SAP"
+  default = "Inboxable"
 }
 ```
 ## Step-11: c3-02-local-values.tf

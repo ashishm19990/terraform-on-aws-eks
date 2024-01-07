@@ -50,7 +50,7 @@ variable "vpc_availability_zones" {
 
 ## Step-02: Create EC2 Key pair and save it
 - Go to Services -> EC2 -> Network & Security -> Key Pairs -> Create Key Pair
-- **Name:** eks-terraform-key
+- **Name:** prometheus
 - **Key Pair Type:** RSA (leave to defaults)
 - **Private key file format:** .pem
 - Click on **Create key pair**
@@ -59,7 +59,7 @@ variable "vpc_availability_zones" {
 ```t
 # Provider Permissions to EC2 Key Pair
 cd terraform-manifests/private-key
-chmod 400 eks-terraform-key.pem
+chmod 400 prometheus.pem
 ```
 ## Step-03: c4-01-ec2bastion-variables.tf
 ```t
@@ -76,7 +76,7 @@ variable "instance_type" {
 variable "instance_keypair" {
   description = "AWS EC2 Key pair that need to be associated with EC2 Instance"
   type = string
-  default = "eks-terraform-key"
+  default = "prometheus"
 }
 ```
 ## Step-04: c4-03-ec2bastion-securitygroups.tf
@@ -107,7 +107,7 @@ data "aws_ami" "amzlinux2" {
   owners = [ "amazon" ]
   filter {
     name = "name"
-    values = [ "amzn2-ami-hvm-*-gp2" ]
+    values = [ "al2023-ami-2023*" ]
   }
   filter {
     name = "root-device-type"
@@ -165,18 +165,18 @@ resource "null_resource" "copy_ec2_keys" {
     host     = aws_eip.bastion_eip.public_ip    
     user     = "ec2-user"
     password = ""
-    private_key = file("private-key/eks-terraform-key.pem")
+    private_key = file("private-key/prometheus.pem")
   }  
 
 ## File Provisioner: Copies the terraform-key.pem file to /tmp/terraform-key.pem
   provisioner "file" {
-    source      = "private-key/eks-terraform-key.pem"
-    destination = "/tmp/eks-terraform-key.pem"
+    source      = "private-key/prometheus.pem"
+    destination = "/tmp/prometheus.pem"
   }
 ## Remote Exec Provisioner: Using remote-exec provisioner fix the private key permissions on Bastion Host
   provisioner "remote-exec" {
     inline = [
-      "sudo chmod 400 /tmp/eks-terraform-key.pem"
+      "sudo chmod 400 /tmp/prometheus.pem"
     ]
   }
 ## Local Exec Provisioner:  local-exec provisioner (Creation-Time Provisioner - Triggered during Create Resource)
@@ -192,7 +192,7 @@ resource "null_resource" "copy_ec2_keys" {
 ## Step-09: ec2bastion.auto.tfvars
 ```t
 instance_type = "t3.micro"
-instance_keypair = "eks-terraform-key"
+instance_keypair = "prometheus"
 ```
 
 ## Step-10: c4-02-ec2bastion-outputs.tf
@@ -312,13 +312,13 @@ terraform apply -auto-approve
 4. Connect to Bastion EC2 Instnace
 ```t
 # Connect to Bastion EC2 Instance
-ssh -i private-key/eks-terraform-key.pem ec2-user@<Elastic-IP-Bastion-Host>
+ssh -i private-key/prometheus.pem ec2-user@<Elastic-IP-Bastion-Host>
 sudo su -
 
 # Verify File and Remote Exec Provisioners moved the EKS PEM file
 cd /tmp
 ls -lrta
-Observation: We should find the file named "eks-terraform-key.pem" moved from our local desktop to Bastion EC2 Instance "/tmp" folder
+Observation: We should find the file named "prometheus.pem" moved from our local desktop to Bastion EC2 Instance "/tmp" folder
 ```
 
 ## Step-17: Clean-Up

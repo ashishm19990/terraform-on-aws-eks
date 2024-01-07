@@ -84,7 +84,7 @@ data "aws_ami" "amzlinux" {
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   #version                = "~> 2.0"
-  version = "5.5.0"
+  version = "5.6.0"
 
   name                   = "my-modules-demo"
   #instance_count         = 2
