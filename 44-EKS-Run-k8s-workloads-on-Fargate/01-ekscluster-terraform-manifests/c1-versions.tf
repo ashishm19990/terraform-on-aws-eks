@@ -5,7 +5,7 @@ terraform {
     aws = {
       source = "hashicorp/aws"
       #version = ">= 4.65"
-      version = ">= 5.31"
+      version = "~> 5.31"
      }
   }
   # Adding Backend as S3 for Remote State Storage

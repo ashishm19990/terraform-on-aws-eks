@@ -2,6 +2,12 @@
     "folders": [
         {
             "path": "../../.."
+        },
+        {
+            "path": "../../../../learn-terraform-provision-eks-cluster"
+        },
+        {
+            "path": "../../../../../Library/CloudStorage/OneDrive-infogroup/Desktop/Inboxable/mi-ui-app"
         }
     ]
 }

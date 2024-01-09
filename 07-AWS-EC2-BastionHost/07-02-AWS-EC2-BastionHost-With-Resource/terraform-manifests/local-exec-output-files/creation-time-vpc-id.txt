@@ -1,0 +1,2 @@
+VPC created on Mon 8 Jan 2024 12:33:55 IST and VPC ID: vpc-0925f015a3c73bee7
+VPC created on Mon 8 Jan 2024 13:30:26 IST and VPC ID: vpc-08fac832004c2d034
