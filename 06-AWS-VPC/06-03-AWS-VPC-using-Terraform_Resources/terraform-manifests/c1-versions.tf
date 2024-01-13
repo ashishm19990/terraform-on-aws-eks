@@ -1,3 +1,4 @@
+# Terraform Settings Block
 terraform {
   required_providers {
     aws = {
@@ -7,8 +8,8 @@ terraform {
   }
 }
 
+# Terraform Provider Block
 provider "aws" {
-  # Configuration options
   profile = "default"
   region  = var.aws_region
 }
