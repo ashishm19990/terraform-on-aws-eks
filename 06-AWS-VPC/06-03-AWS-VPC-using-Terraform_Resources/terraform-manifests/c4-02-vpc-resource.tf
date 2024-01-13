@@ -96,7 +96,7 @@ resource "aws_eip" "nat_eip" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.name}-my-eks-eip-${count.index}"
+      Name = "${local.name}-my-eks-eip-${count.index + 1}"
     }
   )
 }
