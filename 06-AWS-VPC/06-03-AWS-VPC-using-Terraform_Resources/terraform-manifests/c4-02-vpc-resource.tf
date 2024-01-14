@@ -1,7 +1,9 @@
 # VPC resource
 resource "aws_vpc" "vpc" {
-  cidr_block       = var.vpc_cidr_block
-  instance_tenancy = "default"
+  cidr_block           = var.vpc_cidr_block
+  instance_tenancy     = "default"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
   tags = merge(
     local.common_tags,
@@ -13,10 +15,11 @@ resource "aws_vpc" "vpc" {
 
 # VPC Public Subnet Resource
 resource "aws_subnet" "public_subnet" {
-  vpc_id            = aws_vpc.vpc.id
-  count             = length(var.vpc_public_subnets)
-  cidr_block        = element(var.vpc_public_subnets, count.index)
-  availability_zone = element(var.vpc_availability_zones, count.index)
+  vpc_id                  = aws_vpc.vpc.id
+  count                   = length(var.vpc_public_subnets)
+  cidr_block              = element(var.vpc_public_subnets, count.index)
+  availability_zone       = element(var.vpc_availability_zones, count.index)
+  map_public_ip_on_launch = true
   tags = merge(
     local.common_tags,
     {
