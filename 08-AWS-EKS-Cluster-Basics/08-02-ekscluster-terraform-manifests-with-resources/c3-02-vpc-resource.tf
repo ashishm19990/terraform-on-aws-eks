@@ -14,10 +14,12 @@ resource "aws_vpc" "vpc" {
 
 # VPC Public Subnet Resource
 resource "aws_subnet" "public_subnet" {
-  vpc_id            = aws_vpc.vpc.id
-  count             = length(var.vpc_public_subnets)
-  cidr_block        = element(var.vpc_public_subnets, count.index)
-  availability_zone = element(var.vpc_availability_zones, count.index)
+  vpc_id                  = aws_vpc.vpc.id
+  count                   = length(var.vpc_public_subnets)
+  cidr_block              = element(var.vpc_public_subnets, count.index)
+  availability_zone       = element(var.vpc_availability_zones, count.index)
+  map_public_ip_on_launch = true
+
   tags = merge(
     local.common_tags,
     {

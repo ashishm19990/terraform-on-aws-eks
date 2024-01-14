@@ -152,7 +152,6 @@ resource "aws_route_table" "private_route_table_02" {
   )
 }
 
-
 # Resource To Create An Association Between A Route Table And A Subnet-1
 resource "aws_route_table_association" "private_01" {
   subnet_id      = aws_subnet.private_subnet[0].id
