@@ -23,8 +23,8 @@ COPY index.html /usr/share/nginx/html
 
 ## Step-3: Build Docker Image & run it
 ```
-docker build -t stacksimplify/mynginx_image1:v1 .
-docker run --name mynginx1 -p 80:80 -d stacksimplify/mynginx_image1:v1
+docker build -t ashish001/mynginx_image1:v1 .
+docker run --name mynginx1 -p 80:80 -d ashish001/mynginx_image1:v1
 
 Replace your docker hub account Id
 docker build -t <your-docker-hub-id>/mynginx_image1:v1 .
