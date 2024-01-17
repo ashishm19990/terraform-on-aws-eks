@@ -1,0 +1,13 @@
+# Services Cluster IP
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: myapp
+    type: backend
+  ports:
+  - port: 80        # Port of Service Maps with Cluster IP of Service
+    targetPort: 80  # Target Pod Port
