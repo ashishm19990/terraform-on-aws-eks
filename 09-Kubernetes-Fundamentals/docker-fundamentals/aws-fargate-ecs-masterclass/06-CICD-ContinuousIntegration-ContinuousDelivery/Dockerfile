@@ -1,2 +1,4 @@
-FROM nginx
-COPY index.html /usr/share/nginx/html
+FROM --platform=linux/amd64 nginx
+
+COPY default.conf /etc/nginx/conf.d/
+COPY index.html /usr/share/nginx/html/
