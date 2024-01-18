@@ -61,6 +61,7 @@ docker push <replace-with-your-docker-hub-id>/nginxapp3
     - **Launch Type:** Fargate
     - **Container Image:** stacksimplify/nginxapp1
 - **App2 Task Definition:** aws-nginx-app2
+    - **Network mode:** default
     - **Launch Type:** EC2
     - **Container Image:** stacksimplify/nginxapp2
     
@@ -92,6 +93,8 @@ docker push <replace-with-your-docker-hub-id>/nginxapp3
 - **Cluster:** ecs-ec2-demo
 - Number of Tasks: 2
 - Choose VPC & Create Security Group
+- Auto-assign public IP Turn On
+- Network mode default
 - Select Application Load Balancer
     - Container to Load Balance
     - Target Group Name: ecs-nginx-app2-tg
@@ -107,6 +110,7 @@ docker push <replace-with-your-docker-hub-id>/nginxapp3
 ## Step-01: Autoscaling: Target Tracking Policy
 - Update any of the existing service to add Autoscaling Policy
 - **Service Name:** aws-nginx-app1-svc
+    - Policy name: tg-alb-requests-1000
     - Minimum Number of Tasks: 1
     - Desired Number of Tasks: 1
     - Maximum Number of Tasks: 3
