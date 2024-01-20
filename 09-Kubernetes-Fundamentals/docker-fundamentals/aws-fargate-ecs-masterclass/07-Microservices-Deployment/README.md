@@ -58,7 +58,7 @@
 - Gather the following details from RDS MySQL database to provide them as environment variables in our ECS Task Definition
 ```
 AWS_RDS_HOSTNAME=<gather db endpoint information from Connectivity & security --> Endpoint & port section>
-AWS_RDS_HOSTNAME=microservicesdb.cxojydmxwly6.us-east-1.rds.amazonaws.com
+AWS_RDS_HOSTNAME=microservicesdb.ch84mki04f3v.us-east-1.rds.amazonaws.com
 AWS_RDS_PORT=3306
 AWS_RDS_DB_NAME=usermgmt
 AWS_RDS_USERNAME=dbadmin
@@ -83,8 +83,8 @@ AWS_MAIL_SERVER_FROM_ADDRESS= use-a-valid-email@gmail.com
 -  **Email Addresses**
     - Verify a New Email Address
     - Email Address Verification Request will be sent to that address, click on link to verify your email. 
-    - From Address: stacksimplify@gmail.com (replace with your ids during verification)
-    - To Address: dkalyanreddy@gmail.com (replace with your ids during verification)
+    - From Address: amittal071@gmail.com (replace with your ids during verification)
+    - To Address: swati.agrawal1592@gmail.com (replace with your ids during verification)
 - **Important Note:** We need to ensure all the emails (FromAddress email) and (ToAddress emails) to be verified here. 
     - Reference Link: https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses.html    
 
@@ -94,10 +94,10 @@ AWS_MAIL_SERVER_FROM_ADDRESS= use-a-valid-email@gmail.com
     - Availability Zones: ecs-vpc:  us-east-1a, us-east-1b
     - Security Group: microservices-sg-alb (Inbound: Port 80)
     - Target Group: temp-tg-micro (Rest all defaults)
-- **DNS register the LB URL** with a custom domain name something like "services.stacksimplify.com" in Route53. 
+- **DNS register the LB URL** with a custom domain name something like "services.vardhmangarmants.store" in Route53. 
     - Gather the DNS Name of "microservices-alb"
     - Create a Record set in Hosted Zone
-        - Record Set Name: services.stacksimplify.com
+        - Record Set Name: services.vardhmangarmants.store
         - Alias: Yes
         - Alias Name: microservices-alb url
 
@@ -157,7 +157,7 @@ AWS_MAIL_SERVER_FROM_ADDRESS= use-a-valid-email@gmail.com
     - If we get **Request Timed out** as status, cross check ECS security group assigned to **svc-notificaiton-microservice** whether port 8096 is open for inbound traffic. 
 - Verify using Load Balancer URL or DNS registered URL
 ```
-http://services.stacksimplify.com/notification/health-status
+http://services.vardhmangarmants.store/notification/health-status
 ```
 
 
@@ -175,12 +175,12 @@ http://services.stacksimplify.com/notification/health-status
     - Image: stacksimplify/usermanagement-microservice:1.0.0
     - Container Port: 8095
     - **Environment Variables**
-        - AWS_RDS_HOSTNAME=microservicesdb.cxojydmxwly6.us-east-1.rds.amazonaws.com
+        - AWS_RDS_HOSTNAME=microservicesdb.ch84mki04f3v.us-east-1.rds.amazonaws.com
         - AWS_RDS_PORT=3306
         - AWS_RDS_DB_NAME=usermgmt
         - AWS_RDS_USERNAME=dbadmin
         - AWS_RDS_PASSWORD=*****
-        - NOTIFICATION_SERVICE_HOST=services.stacksimplify.com [or] ALB DNS Name
+        - NOTIFICATION_SERVICE_HOST=services.vardhmangarmants.store [or] ALB DNS Name
         - NOTIFICATION_SERVICE_PORT=80
 
 ## Step-2: Allow Connections from ECS to RDS DB
@@ -223,13 +223,13 @@ http://services.stacksimplify.com/notification/health-status
     - If we get **Request Timed out** as status, cross check ECS security group assigned to **svc-notificaiton-microservice** whether port 8096 is open for inbound traffic. 
 - Verify using Load Balancer URL or DNS registered URL
 ```
-http://services.stacksimplify.com/usermgmt/health-status
+https://services.vardhmangarmants.store/usermgmt/health-status
 ```
 # Module - 4: Test both Microservices using Postman
 ## Step-1: Import postman project to Postman client on our desktop. 
 - Import postman project
 - Add environment url 
-    - http://services.stacksimplify.com (**Replace with your ALB DNS registered url on your environment**)
+    - http://services.vardhmangarmants.store (**Replace with your ALB DNS registered url on your environment**)
 
 ## Step-2: Test both Microservices using Postman
 ### Notification Service
