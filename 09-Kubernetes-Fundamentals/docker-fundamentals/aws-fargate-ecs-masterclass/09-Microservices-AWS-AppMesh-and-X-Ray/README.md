@@ -12,10 +12,10 @@
     - Availability Zones: ecs-vpc:  ap-south-1a, ap-south-1b
     - Security Group: microservices-sg-alb (Inbound: Port 80)
     - Target Group: temp-tg-microappmesh (Rest all defaults)
-- **DNS register the LB URL** with a custom domain name something like "appmesh.stacksimplify.com" in Route53. 
+- **DNS register the LB URL** with a custom domain name something like "appmesh.vardhmangarmants.store" in Route53. 
     - Gather the DNS Name of "microservices-appmesh-alb"
     - Create a Record set in Hosted Zone
-        - Record Set Name: appmesh.stacksimplify.com
+        - Record Set Name: appmesh.vardhmangarmants.store
         - Alias: Yes
         - Alias Name: microservices-appmesh-alb url
 
@@ -39,7 +39,7 @@
 - **Service Discovery**
     - Enable service discovery integration: Checked
     - Namespace: create new private name space 
-    - Namespace Name: stacksimplify-dev.com
+    - Namespace Name: vardhmangarmants-dev.com
     - Configure service discovery service: Create new service discovery service
     - Service discovery name: notification-service
     - Enable ECS task health propagation: checked
@@ -84,14 +84,14 @@
 - **Service Discovery**
     - Enable service discovery integration: Checked
     - Namespace: create new private name space 
-    - Namespace Name: stacksimplify-dev.com
+    - Namespace Name: vardhmangarmants-dev.com
     - Configure service discovery service: Create new service discovery service
     - Service discovery name: usermanagement-service
     - Enable ECS task health propagation: checked
     - Rest all defaults
 - Verify in AWS Cloud Map about the newly created Namespace, Service and registered Service Instance for User Management Microservice. 
 - Update User Management Service Task Definition with Notification Service Discovery name
-    - notification-service.stacksimplify-dev.com
+    - notification-service.vardhmangarmants-dev.com
 - Update the **appmesh-usermanagement** with latest task defintion. 
 - **Testing using Postman**
     - List Users
@@ -105,20 +105,20 @@
     - Name: microservices-mesh
     - **Egress filter:** Allow External Traffic
 - **Microservices Service Discovery Names**
-    - **User Management Service:** usermanagement-service.stacksimplify-dev.com
-    - **Notification Service:** notification-service.stacksimplify-dev.com
+    - **User Management Service:** usermanagement-service.vardhmangarmants-dev.com
+    - **Notification Service:** notification-service.vardhmangarmants-dev.com
 
 ## Step-6: Notification Microservice - Create Virtual Node & Virtual Service
 - **Virtual Node:**
     - Virtual Node Name:notification-vnode
     - Service Discovery Method: DNS
-    - DNS Hostname: notification-service.stacksimplify-dev.com
+    - DNS Hostname: notification-service.vardhmangarmants-dev.com
     - Backend: Nothing
     - Health Status: Nothing
     - Listener Port: 8096 Protocol: HTTP
     - Health Check: Disabled
 - **Virtual Service:**    
-    - Virtul Service Name: notification-service.stacksimplify-dev.com
+    - Virtul Service Name: notification-service.vardhmangarmants-dev.com
     - Provider: Virtual Node
     - Virtual Node: notification-vnode
 
@@ -126,25 +126,27 @@
 - **Virtual Node:**
     - Virtual Node Name:usermgmt-vnode
     - Service Discovery Method: DNS
-    - DNS Hostname: usermanagement-service.stacksimplify-dev.com
+    - DNS Hostname: usermanagement-service.vardhmangarmants-dev.com
     - Backend: Nothing
     - Health Status: Nothing
     - Listener Port: 8095 Protocol: HTTP
     - Health Check: Disabled
 - **Virtual Service:**    
-    - Virtul Service Name: usermanagement-service.stacksimplify-dev.com
+    - Virtul Service Name: usermanagement-service.vardhmangarmants-dev.com
     - Provider: Virtual Node
     - Virtual Node: usermgmt-vnode
 
 ## Step-8: Update backend for Virtual Node: usermgmt-vnode
-- Service Backends: notification-service.stacksimplify-dev.com
+- Service Backends: notification-service.vardhmangarmants-dev.com
 
 
 ## Step-9: IAM Changes - Provide access for ecsTaskExecutionRole
 - **Role Name:** ecsTaskExecutionRole
 - Navigate to IAM and update this role by attaching below listed policy
     - **Policy Name:** AWSXRayDaemonWriteAccess
-
+    - **Policy Name:** CloudWatchFullAccess
+    - **Policy Name:** AWSAppMeshEnvoyAccess
+    
 ## Step-10: Task Definition Update: Notification Microservice to Enable AppMesh & X-Ray
 - **X-Ray Container**
     - Container Name: xray-daemon
