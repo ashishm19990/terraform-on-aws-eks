@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp-deployment
+  name: nginx-deployment
   labels:
-    app: myapp
+    app: nginx
     type: frontend
 spec:
   template:
     metadata:
-      name: myapp-pod
+      name: nginx
       labels:
-        app: myapp
+        app: nginx
         type: frontend
     spec:
       containers:
       - name: nginx-container
-        image: nginx
+        image: ashish001/nginxapp1
         resources:
           limits:
             memory: "128Mi"
@@ -25,6 +25,6 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      type: frontend
+      app: nginx
 
- 
+# echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/amitta/.zprofile

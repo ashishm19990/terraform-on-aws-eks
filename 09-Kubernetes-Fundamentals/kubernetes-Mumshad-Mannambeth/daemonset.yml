@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx
+  namespace: default
+  labels:
+    tier: daemonset
+spec:
+  selector:
+    matchLabels:
+      tier: daemonset
+  template:
+    metadata:
+      labels:
+        tier: daemonset
+    spec:
+      containers:
+      - name: nginx
+        image: ashish001/nginxapp1
