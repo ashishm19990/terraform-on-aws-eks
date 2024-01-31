@@ -73,8 +73,7 @@ These are notes from the [Certified Kubernetes Administrator Course](https://kod
   - [06-Practice-Test-Managing-Application-Logs](docs/04-Logging-and-Monitoring/06-Practice-Test-Managing-Application-Logs.md)
 
 
-- [05-Application-Lifecycle-Management](docs/05-Application-Lifecycle-Management)
-  - https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+- [05-Application-Lifecycle-Management](docs/05-Application-Lifecycle-Management) [most basic commands for kubernetes](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
   
   - [01-Application-Lifecycle-Management--Section-Introduction](docs/05-Application-Lifecycle-Management/01-Application-Lifecycle-Management--Section-Introduction.md)
   - [02-RollingUpdates-and-Rollback](docs/05-Application-Lifecycle-Management/02-RollingUpdates-and-Rollback.md)
