@@ -1,0 +1,29 @@
+# https://kubernetes.io/docs/concepts/workloads/pods/
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: mylivenessprobe
+spec:
+  containers:
+  - name: liveness
+    image: ubuntu
+    args:
+    - /bin/sh
+    - -c
+    - touch /data/healthy; sleep 1000
+    livenessProbe:                                          
+      exec:
+        command:                                         
+        - cat                
+        - /data/healthy
+      initialDelaySeconds: 5          
+      periodSeconds: 5                                 
+      timeoutSeconds: 30
+    volumeMounts:
+    - name: localtime
+      mountPath: /data
+  volumes:
+  - name: localtime
+    persistentVolumeClaim:
+      claimName: efs-claim  
