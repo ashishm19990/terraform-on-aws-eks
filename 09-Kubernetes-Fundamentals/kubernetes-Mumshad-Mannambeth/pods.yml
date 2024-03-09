@@ -7,11 +7,23 @@ metadata:
     tier: frontend
 spec:
   containers:
-    - name: nginx-container
-      image: nginx
-      resources:
-        limits:
-          memory: "128Mi"
-          cpu: "500m"
-      ports:
-        - containerPort: 80
+  - name: nginx-container
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    volumeMounts:
+      - name:  Name of the Volume
+        mountPath:  Path to mount
+    ports:
+    - containerPort: 80
+  imagePullSecrets:
+  - name: Secret with Registry credentials
+  volumes:
+  - name: Volume Name
+    hostPath:
+      path: Path to mount
+      type: Directory  
+
+ 

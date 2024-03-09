@@ -1,0 +1,12 @@
+# https://aws.amazon.com/blogs/storage/persistent-storage-for-kubernetes/
+# kubectl apply -k "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.7"
+
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  directoryPerms: "700"
+  fileSystemId: fs-094aac002cb1dfc2d  # 

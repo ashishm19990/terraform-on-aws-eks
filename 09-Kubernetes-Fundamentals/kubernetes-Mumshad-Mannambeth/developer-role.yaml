@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: developer
+rules:
+- apiGroups: [""] 
+  resources: ["pods"]
+  verbs: ["list", "craete", "update", "delete", "get", "watch", "list"]
+  resourceNames: ["blue", "orange"]
+- apiGroups: [""] 
+  resources: ["ConfigMap"]
+  verbs: ["craete"]

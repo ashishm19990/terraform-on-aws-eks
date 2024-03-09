@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard-deployment
+  labels:
+    app: dashboard-deployment
+    type: frontend
+spec:
+  template:
+    metadata:
+      name: dashboard-deployment
+      labels:
+        app: dashboard-deployment
+        type: frontend
+    spec:
+      containers:
+      - name: dashboard-deployment
+        image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+      serviceAccountName: dashboard-sa
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dashboard-deployment

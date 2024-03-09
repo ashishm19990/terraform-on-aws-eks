@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvdeploy
+spec:
+  replicas: 1
+  selector:      # tells the controller which pods to watch/belong to
+    matchLabels:
+     app: mypv
+  template:
+    metadata:
+      labels:
+        app: mypv
+    spec:
+      containers:
+        - name: app
+          image: centos
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do echo $(date -u) >> /data/out.txt; sleep 5; done"]
+          volumeMounts:
+          - name: mypd
+            mountPath: /data
+      volumes:
+        - name: mypd
+          persistentVolumeClaim:
+            claimName: efs-claim
