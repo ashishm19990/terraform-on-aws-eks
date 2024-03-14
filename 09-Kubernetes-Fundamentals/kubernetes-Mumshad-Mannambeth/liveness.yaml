@@ -1,29 +1,38 @@
 # https://kubernetes.io/docs/concepts/workloads/pods/
+# https://aws.amazon.com/blogs/storage/persistent-storage-for-kubernetes/
+# kubectl apply -k "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.7"
+# sudo apt-get install -y nfs-common
+# mkdir efs
+# sudo mount -t nfs4 fs-0b73317285cf67838.efs.us-east-1.amazonaws.com:/ efs
+---
+apiVersion: v1
 kind: Pod
 metadata:
   labels:
     test: liveness
-  name: mylivenessprobe
+  name: liveness-exec
 spec:
   containers:
   - name: liveness
-    image: ubuntu
+    image: registry.k8s.io/busybox
     args:
     - /bin/sh
     - -c
-    - touch /data/healthy; sleep 1000
-    livenessProbe:                                          
+    - touch /data/healthy; sleep 30; rm -f /data/healthy; sleep 600
+    livenessProbe:
       exec:
-        command:                                         
-        - cat                
+        command:
+        - cat
         - /data/healthy
-      initialDelaySeconds: 5          
-      periodSeconds: 5                                 
-      timeoutSeconds: 30
+      initialDelaySeconds: 5
+      periodSeconds: 5
     volumeMounts:
     - name: localtime
       mountPath: /data
   volumes:
   - name: localtime
     persistentVolumeClaim:
-      claimName: efs-claim  
+      claimName: efs-claim
+---
+
+---

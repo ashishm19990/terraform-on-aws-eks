@@ -1,0 +1,152 @@
+name: Ruby QA CICD
+on:
+ push:
+  branches:
+    - "master"
+  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: ['3.2' ]
+    env:
+      BUNDLE_GITHUB__COM: "${{ secrets.BUNDLE_GITHUB__COM }}"
+      BUNDLE_GEMS__CONTRIBSYS__COM: "${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}"
+      BUNDLE_WITHOUT: "development:production:qa:sandbox"
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      DISABLE_SPRING: true
+      RAILS_ENV: test
+      CI: true
+    services:
+      postgres:
+        image: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: runner
+          POSTGRES_HOST_AUTH_METHOD: trust
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+    - name: Install Ruby, bundler and the bundle
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - name: Install xsv
+      run:
+        curl -sOL https://axle-apt.s3.amazonaws.com/ubuntu/focal/xsv_0.13.0-3_amd64.deb && sudo dpkg -i xsv_0.13.0-3_amd64.deb
+    - name: Setup
+      run: bin/setup
+    - name: Zeitwerk Check
+      run: bundle exec bin/rails zeitwerk:check
+    - name: Run tests
+      run: bundle exec bin/rails test
+    - name: Publish code coverage
+      if: ${{ github.actor != 'dependabot[bot]' }}
+      uses: paambaati/codeclimate-action@v3.0.0
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+        aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+        aws-region: us-east-1
+    - name: Docker build and Push
+      run: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 028563536761.dkr.ecr.us-east-1.amazonaws.com
+        aws ssm get-parameters --region us-east-1 --names /rails_apps/legacy_importer/qa/env --with-decryption --output text --query "Parameters[*].{Value:Value}" > .env
+        docker build --build-arg BUNDLE_GITHUB__COM=${{secrets.BUNDLE_GITHUB__COM}} --build-arg BUNDLE_GEMS__CONTRIBSYS__COM=${{secrets.BUNDLE_GEMS__CONTRIBSYS__COM}} --build-arg RAILS_ENV="qa" -t legacy_importer-qa:${{github.sha}} .
+        docker tag legacy_importer-qa:${{github.sha}}  028563536761.dkr.ecr.us-east-1.amazonaws.com/legacy_importer-qa:${{github.sha}} 
+        docker push 028563536761.dkr.ecr.us-east-1.amazonaws.com/legacy_importer-qa:${{github.sha}} 
+
+  terraform:
+    name: Verify Terraform
+    runs-on: ubuntu-latest
+    needs: [docker]
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+          aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+          aws-region: us-east-1
+
+      - name: Configure AWS Profile
+        uses: Fooji/create-aws-profile-action@v1
+        with:
+          profile: default
+          region: us-east-1
+          key: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+          secret: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+
+      - name: Verification of Terraform
+        run: |
+         cd terraform
+         terraform fmt
+         terraform init
+         terraform apply  --auto-approve 
+
+  Deployapp:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    needs: [terraform]
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+          aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+          aws-region: us-east-1
+
+      - name: Configure AWS Profile
+        uses: Fooji/create-aws-profile-action@v1
+        with:
+          profile: default
+          region: us-east-1
+          key: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+          secret: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+           
+      - name: Configure EKS Cluster
+        run: |
+          aws eks update-kubeconfig --region us-east-1 --name  legacy-imp
+          cd terraform
+          kubectl apply -f cluster-autoscaler.yaml
+          kubectl apply -f lb.yaml
+          kubectl apply -f legacy-imp-qa/ns.yaml
+          kubectl apply -f legacy-imp-qa/ingress.yaml
+          kubectl apply -f pod-log-insight.yaml
+          kubectl apply -f legacy-imp-qa/svc.yaml
+          kubectl apply -f cloudwatch/cloudwatch-setup.yaml
+      
+      - name: deploy application
+        run: |
+          export legacy_imp_image_qa="028563536761.dkr.ecr.us-east-1.amazonaws.com/legacy_importer-qa:${{github.sha}}"
+          cd terraform/legacy-imp-qa
+          envsubst < web.yaml | kubectl apply -f -
+          envsubst < worker.yaml | kubectl apply -f -
+          kubectl apply -f hpa.yaml 

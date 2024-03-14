@@ -1,5 +1,8 @@
 # https://aws.amazon.com/blogs/storage/persistent-storage-for-kubernetes/
 # kubectl apply -k "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.7"
+# sudo apt-get install -y nfs-common
+# mkdir efs
+# sudo mount -t nfs4 fs-0b73317285cf67838.efs.us-east-1.amazonaws.com:/ efs
 
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
