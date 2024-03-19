@@ -13,6 +13,7 @@ output "ec2_bastion_public_ip" {
   value       = aws_eip.bastion_eip.public_ip
 }
 
+## ec2_bastion_private_ip
 output "ec2_instance_private_instance_ids" {
   description = "List of IDs of instances"
   value       = aws_instance.ec2_private.id
