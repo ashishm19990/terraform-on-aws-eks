@@ -1,0 +1,29 @@
+- targets:
+  - localhost:9100
+  labels:
+    team: "development"
+    region: "Mumbai"
+
+- targets:
+  - localhost1:9100
+  labels:
+    team: "monitoring"
+    region: "Bangalore"
+
+- targets:
+  - localhost2:9100
+  labels:
+    team: "development"
+    region: "Bangalore"
+
+- targets:
+  - localhost3:9100
+  labels:
+    team: "l1"
+    region: "Hyderabad"
+
+- targets:
+  - localhost4:9100
+  labels:
+    team: "l2"
+    region: "Bangalore"
