@@ -118,3 +118,38 @@
 - [Exam Review Guide](https://learn.hashicorp.com/tutorials/terraform/associate-review?in=terraform/certification)
 - [Sample Questions](https://learn.hashicorp.com/tutorials/terraform/associate-questions?in=terraform/certification)
 
+Docker Images present on Docker Hub and GitHub Container Registry 
+
+Dear Students,
+A few of the students are reporting intermittent download issues for Docker Images hosted on Docker Hub.
+
+This is due to Docker enabling the pull limits on the Docker Hub. We enabled the paid subscription to Docker Hub to increase the limits (5000 pulls per day).
+
+In addition, we have also placed the same Docker Images on GitHub Container Registry.
+
+All the Docker Images which we used in our courses are now also present in GitHub Container Registry (Nothing but the "Packages Tab" on our GitHub Repository).
+https://github.com/stacksimplify?tab=packages
+
+Important Note: As usual we don't need any credentials or registered users to access these packages. These are publicly available on our GitHub Repository.
+
+Please find the related screenshot below
+
+In addition, I have created a GitHub Repository docker-hub-to-github-container-registry with Docker Hub vs GitHub Container Registry Docker Images list. Please find its sample screenshot below for reference.
+
+GitHub Repository Link: https://github.com/stacksimplify/docker-hub-to-github-container-registry
+
+Sample Screenshot for reference
+
+Question: What do you need to do when you face an issue with Docker Image download?
+
+Answer:
+
+Just prefix the Docker Image name with "ghcr.io/" in your Kubernetes Deployment or Pod YAML Manifests and it should download the Docker Image from GitHub Container Registry.
+
+In addition, if you want to reference all the Docker Images hosted on GitHub Container Registry, you can go to the Packages section.
+
+In addition, if you want the list of Docker Image names on Docker Hub vs GitHub Container Registry you can go to the GitHub Repo docker-hub-to-github-container-registry to review the table
+
+https://github.com/stacksimplify/docker-hub-to-github-container-registry
+Regards, 
+Kalyan Reddy Daida
