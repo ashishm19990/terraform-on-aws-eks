@@ -152,6 +152,7 @@ resource "aws_route_table" "private_route_table_02" {
   )
 }
 
+/*
 # VPC Private Routing Table For Private Subnet-3
 resource "aws_route_table" "private_route_table_03" {
   vpc_id = aws_vpc.vpc.id
@@ -168,6 +169,7 @@ resource "aws_route_table" "private_route_table_03" {
     }
   )
 }
+*/
 
 # Resource To Create An Association Between A Route Table And A Subnet-1
 resource "aws_route_table_association" "private_01" {
@@ -181,8 +183,10 @@ resource "aws_route_table_association" "private_02" {
   route_table_id = aws_route_table.private_route_table_02.id
 }
 
+/*
 # Resource To Create An Association Between A Route Table And A Subnet-3
 resource "aws_route_table_association" "private_03" {
   subnet_id      = aws_subnet.private_subnet[2].id
   route_table_id = aws_route_table.private_route_table_03.id
 }
+*/

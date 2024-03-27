@@ -8,7 +8,7 @@ resource "aws_eks_node_group" "eks_ng_private" {
   subnet_ids      = aws_subnet.private_subnet[*].id
   #version = var.cluster_version #(Optional: Defaults to EKS Cluster Kubernetes version)    
 
-  ami_type       = "AL2_x86_64"
+  ami_type       = "AL2023_x86_64_STANDARD"
   capacity_type  = "ON_DEMAND"
   disk_size      = 20
   instance_types = ["t3.medium"]

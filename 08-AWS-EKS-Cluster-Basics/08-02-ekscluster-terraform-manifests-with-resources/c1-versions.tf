@@ -1,12 +1,18 @@
 # Terraform Settings Block
 terraform {
-  required_version = ">= 1.6.0"
+  required_version = ">= 1.7.0"
   required_providers {
     aws = {
       source = "hashicorp/aws"
       #version = ">= 4.65"
-      version = "~> 5.31"
+      version = "~> 5.40"
     }
+  }
+  backend "s3" {
+    region         = "us-east-1"
+    bucket         = "terraform-tfdata"
+    key            = "dev/terraform.tfstate"
+    dynamodb_table = "terraform-tfstate-table"
   }
 }
 
