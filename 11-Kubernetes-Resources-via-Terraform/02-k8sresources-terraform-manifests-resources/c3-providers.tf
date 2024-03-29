@@ -17,3 +17,11 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.terraform_remote_state.eks.outputs.cluster_certificate_authority_data)
   token = data.aws_eks_cluster_auth.cluster.token
 }
+
+output "eks_cluster_name" {
+  value = data.aws_eks_cluster.cluster.id
+}
+
+output "endpoint" {
+  value = data.aws_eks_cluster.cluster.endpoint
+}

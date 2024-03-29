@@ -12,7 +12,7 @@ terraform {
     region         = "us-east-1"
     bucket         = "terraform-tfdata"
     key            = "dev/eks-cluster/terraform.tfstate"
-    dynamodb_table = "terraform-tfstate-table"
+    dynamodb_table = "dev-ekscluster"
   }
 }
 
