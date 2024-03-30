@@ -415,7 +415,7 @@ terraform output
 ```t
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name Inboxable-stag-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name inboxable-stag-eksdemo1
 
 # List Worker Nodes
 kubectl get nodes
