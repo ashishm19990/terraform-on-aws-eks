@@ -9,7 +9,7 @@ resource "aws_eks_node_group" "eks_ng_public" {
 
   ami_type       = "AL2023_x86_64_STANDARD"
   capacity_type  = "ON_DEMAND"
-  disk_size      = 20
+  disk_size      = 30
   instance_types = ["t3.medium"]
 
   remote_access {

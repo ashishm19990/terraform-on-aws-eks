@@ -18,6 +18,12 @@ output "public_subnets" {
   value       = aws_subnet.public_subnet[*].id
 }
 
+# VPC Database Subnets
+output "database_subnets" {
+  description = "List of IDs of database subnets"
+  value       = aws_subnet.database_subnet[*].id
+}
+
 # VPC NAT gateway Public IP
 output "nat_public_ips" {
   description = "List of public Elastic IPs created for AWS NAT Gateway"
