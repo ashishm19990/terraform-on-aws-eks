@@ -240,7 +240,7 @@ Observation:
 aws iam create-login-profile --user-name hr-dev-eksadmin2 --password @EKSUser101 --no-password-reset-required
 
 # Create Security Credentials for IAM User and make a note of them
-aws iam create-access-key --user-name hr-dev-eksadmin2
+aws iam create-access-key --user-name inboxable-dev-eksadmin2
 
 # Make a note of Access Key ID and Secret Access Key
 User: hr-dev-eksadmin1
@@ -258,7 +258,7 @@ User: hr-dev-eksadmin1
 - Login and access EKS Service using AWS Mgmt Console
   - **Username:** hr-dev-eksadmin2
   - **Password:** @EKSUser101
-- Go to  Services -> Elastic Kubernetes Service -> hr-dev-eksdemo1
+- Go to  Services -> Elastic Kubernetes Service -> inboxable-dev-eksdemo1
   - Overview Tab
   - Workloads Tab
   - Configuration Tab
@@ -272,7 +272,7 @@ aws configure list
 aws configure list-profiles
 
 # Configure aws cli hr-dev-eksadmin1 Profile 
-aws configure --profile hr-dev-eksadmin2
+aws configure --profile inboxable-dev-eksadmin2
 AWS Access Key ID: AKIASUF7HC7SRVES7ADE
 AWS Secret Access Key: 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
 Default region: us-east-1
@@ -290,7 +290,7 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl with AWS CLI Profile hr-dev-eksadmin1
 aws eks --region <region-code> update-kubeconfig --name <cluster_name> --profile <AWS-CLI-PROFILE-NAME>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1 --profile hr-dev-eksadmin2
+aws eks --region us-east-1 update-kubeconfig --name inboxable-dev-eksdemo1 --profile inboxable-dev-eksadmin2
 Observation:
 1. It should pass
 
