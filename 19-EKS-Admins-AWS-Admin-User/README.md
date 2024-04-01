@@ -242,7 +242,7 @@ metadata:
 cat $HOME/.kube/config
 
 # Configure kubeconfig for eksadmin1 AWS CLI profile
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1 --profile eksadmin1
+aws eks --region us-east-1 update-kubeconfig --name inboxable-dev-eksdemo1 --profile eksadmin1
 
 # Verify kubeconfig file
 cat $HOME/.kube/config

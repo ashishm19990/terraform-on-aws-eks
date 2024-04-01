@@ -1,0 +1,29 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJVzU1R293Mk90WWN3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBME1ERXdOVEEzTlRWYUZ3MHpOREF6TXpBd05URXlOVFZhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUM3TlAvK3pianZpdVJCc3hkZTdld1VyMzFsWHJsSlU4aWhYV2IyUmZiVEQzbXdsYTkxWHN5Ui9laG4KOVhQcVhlWldXK2JxNnZFSWMwQlV4Tm0wWGhmcWZwdEJIUVFneDVuRFBiWHB6UHVqWDJNcWZMdFdaOGFGRkFTaAplNVFSZzVsSHpkVXRBOWJ5NkpaK1NDMVk2VUNnWWt4NVpycEtTVU9MbzVtVFBldCtnZHFyV0VHWENIc3NwMndGCjZDRFlYak9tMlBNSlJ0ZXJ3MHNDKzdjd010Q3o5MGtsbTllVkpTMlVCT3BNTUNBdkQ2dThBTlp2WGlwNDRocFEKcWNydG9veitOdWFEQWIrVWhsSGY3VGlUTHh3cytraUJKSys4Q1ZnRWIwMFVpYlBieTV1YlhoTkdGMXlGUGZobgowZTFqY3h4cHpjQnlZTndGUHo5TmZybTRDU0RmQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJSTHpiMzV1NzhjbTRqVjYrb3REZ3ZlREN0K0xEQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQjBZQXNiem9IeApPYk1mTEpXY0ZISkFzMWlHS0Vwc3JOeUNwbkF1V2JKWGY5RmxBS3BoT2dZZG1zRVgwUHhuUVBDL2VmM0dzVDhiCjJ0cU42cGtmalMyaU5TOTA1SDNySHdYdDN0eUQyZHdrV3p1enZPSU1USjBodjFwczV2d3I1MkNZcHRUaDZQVmkKUW1vV29JWUtlc29WUWwrYXE0TU84V3VxNlZmaUVlV1hPSElYWU4xdVRZdEgvNW13aks3RnpwM01MOGtlRWFqbwp6Nm9vOEV6RmxhRUVHdmUvM0pOSFAzNVdPanlOV1loQTVmTWtNRDBJM3hNZlBDdFNiYXc1WTNFUG1iU0NTMkRGCitHU0UyUTVWbSt2ZDlzZ0c1YnAzQXVMWUZEK3YxdjUzMDgvS0ZDYmFaTEhtU0oyWVhJeDN6R2JpNnl5QUxwRlAKc2RIWlpmaFVBNE1xCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    server: https://A88268D2DA46F969B296CA8436D03932.gr7.us-east-1.eks.amazonaws.com
+  name: arn:aws:eks:us-east-1:567344542386:cluster/inboxable-dev-eksdemo1
+contexts:
+- context:
+    cluster: arn:aws:eks:us-east-1:567344542386:cluster/inboxable-dev-eksdemo1
+    user: arn:aws:eks:us-east-1:567344542386:cluster/inboxable-dev-eksdemo1
+  name: arn:aws:eks:us-east-1:567344542386:cluster/inboxable-dev-eksdemo1
+current-context: arn:aws:eks:us-east-1:567344542386:cluster/inboxable-dev-eksdemo1
+kind: Config
+preferences: {}
+users:
+- name: arn:aws:eks:us-east-1:567344542386:cluster/inboxable-dev-eksdemo1
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - --region
+      - us-east-1
+      - eks
+      - get-token
+      - --cluster-name
+      - inboxable-dev-eksdemo1
+      - --output
+      - json
+      command: aws

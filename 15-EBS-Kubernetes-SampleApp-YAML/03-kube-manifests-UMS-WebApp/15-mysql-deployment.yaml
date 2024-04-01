@@ -34,7 +34,7 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: ebs-mysql-pv-claim
       - name: usermanagement-dbcreation-script
         configMap:
           name: usermanagement-dbcreation-script
