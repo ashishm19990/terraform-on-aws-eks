@@ -1,5 +1,8 @@
 https://github.com/kubernetes-sigs/aws-iam-authenticator/tree/master
 
+# Describe Cluster
+aws eks --region us-east-1 describe-cluster --name inboxable-dev-eksdemo1 --query cluster.status
+
 # get your account ID
 ACCOUNT_ID=$(aws sts get-caller-identity --output text --query 'Account')
 

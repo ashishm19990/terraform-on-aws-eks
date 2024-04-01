@@ -238,7 +238,10 @@ Observation: Should fail
 
 
 ## Step-09: Assume IAM Role and Configure kubectl 
-```t
+```
+# Set default profile
+export AWS_DEFAULT_PROFILE=eksadmin1
+
 # Export AWS Account ID
 ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
 echo $ACCOUNT_ID
@@ -276,10 +279,10 @@ cat $HOME/.kube/config
 
 # Configure kubeconfig for kubectl
 aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-aws eks --region us-east-1 update-kubeconfig --name hr-dev-eksdemo1
+aws eks --region us-east-1 update-kubeconfig --name inboxable-dev-eksdemo1
 
 # Describe Cluster
-aws eks --region us-east-1 describe-cluster --name hr-dev-eksdemo1 --query cluster.status
+aws eks --region us-east-1 describe-cluster --name inboxable-dev-eksdemo1 --query cluster.status
 
 # List Kubernetes Nodes
 kubectl get nodes
