@@ -254,7 +254,7 @@ aws sts get-caller-identity
 Observation: Should see the user "kalyandev" (EKS_Cluster_Create_User) from default profile
 
 # Set default profile
-export AWS_DEFAULT_PROFILE=hr-dev-eksadmin3
+export AWS_DEFAULT_PROFILE=inboxable-dev-eksadmin3
 
 # Get current user configured in AWS CLI
 aws sts get-caller-identity
@@ -277,7 +277,7 @@ echo $ACCOUNT_ID
 
 # Assume IAM Role
 aws sts assume-role --role-arn "arn:aws:iam::<REPLACE-YOUR-ACCOUNT-ID>:role/eks-admin-role" --role-session-name eksadminsession201
-aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/hr-dev-eks-admin-role" --role-session-name eksadminsession201
+aws sts assume-role --role-arn "arn:aws:iam::$ACCOUNT_ID:role/inboxable-dev-eks-admin-role" --role-session-name eksadminsession201
 
 # GET Values and replace here
 export AWS_ACCESS_KEY_ID=RoleAccessKeyID
