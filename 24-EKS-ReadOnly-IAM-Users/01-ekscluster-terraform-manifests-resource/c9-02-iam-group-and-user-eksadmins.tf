@@ -18,9 +18,9 @@ resource "aws_iam_group_policy" "eksadmins_iam_group_assumerole_policy" {
         Action = [
           "sts:AssumeRole",
         ]
-        Effect = "Allow"
-        Sid    = "AllowAssumeOrganizationAccountRole"
-        Resource =  "${aws_iam_role.eks_admin_role.arn}"
+        Effect   = "Allow"
+        Sid      = "AllowAssumeOrganizationAccountRole"
+        Resource = "${aws_iam_role.eks_admin_role.arn}"
       },
     ]
   })

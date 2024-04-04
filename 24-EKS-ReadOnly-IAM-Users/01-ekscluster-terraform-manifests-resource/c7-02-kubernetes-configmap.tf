@@ -27,8 +27,8 @@ locals {
       username = "eks-readonly" # Just a place holder name
       #groups   = [ "eks-readonly-group" ]
       # Important Note: The group name specified in clusterrolebinding and in aws-auth configmap groups should be same. 
-      groups   = [ "${kubernetes_cluster_role_binding_v1.eksreadonly_clusterrolebinding.metadata.0.name}" ]
-    },   
+      groups = ["${kubernetes_cluster_role_binding_v1.eksreadonly_clusterrolebinding.metadata.0.name}"]
+    },
   ]
   configmap_users = [
     {
@@ -47,6 +47,7 @@ locals {
 # Resource: Kubernetes Config Map
 resource "kubernetes_config_map_v1" "aws_auth" {
   depends_on = [aws_eks_cluster.eks_cluster,
+    kubernetes_cluster_role_binding_v1.eksreadonly_clusterrolebinding
   ]
   metadata {
     name      = "aws-auth"
