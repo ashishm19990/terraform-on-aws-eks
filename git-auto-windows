@@ -1,0 +1,22 @@
+# https://www.rodyvansambeek.com/blog/git-autocomplete-powershell-magic#step-2-load-posh-git-in-your-powershell-session
+
+# Step 1: Install Posh-Git
+Install-Module posh-git -Scope CurrentUser
+
+# Step 2: Load Posh-Git in your PowerShell session
+Import-Module posh-git
+
+# Step 3: Add Posh-Git to your PowerShell profile
+Test-Path $profile
+
+If the output is "False," you'll need to create a new profile by running:
+
+New-Item -ItemType File -Path $profile -Force
+
+code $profile
+
+Import-Module posh-git
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+
+Step 4: Test Git autocomplete
