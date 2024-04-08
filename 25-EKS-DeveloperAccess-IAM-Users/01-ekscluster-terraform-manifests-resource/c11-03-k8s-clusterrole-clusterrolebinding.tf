@@ -1,11 +1,11 @@
-# Resource: Cluster Role
+# Resource: k8s Cluster Role
 resource "kubernetes_cluster_role_v1" "eksdeveloper_clusterrole" {
   metadata {
     name = "${local.name}-eksdeveloper-clusterrole"
   }
 
   rule {
-    api_groups = [""] # These come under core APIs
+    api_groups = [""]
     resources  = ["nodes", "namespaces", "pods", "events", "services"]
     #resources  = ["nodes", "namespaces", "pods", "events", "services", "configmaps", "serviceaccounts"] #Uncomment for additional Testing
     verbs = ["get", "list"]
@@ -22,7 +22,7 @@ resource "kubernetes_cluster_role_v1" "eksdeveloper_clusterrole" {
   }
 }
 
-# Resource: Cluster Role Binding
+# Resource: k8s Cluster Role Binding
 resource "kubernetes_cluster_role_binding_v1" "eksdeveloper_clusterrolebinding" {
   metadata {
     name = "${local.name}-eksdeveloper-clusterrolebinding"
@@ -30,12 +30,11 @@ resource "kubernetes_cluster_role_binding_v1" "eksdeveloper_clusterrolebinding" 
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role_v1.eksdeveloper_clusterrole.metadata[0].name
+    name      = kubernetes_cluster_role_v1.eksdeveloper_clusterrole.metadata.0.name
   }
   subject {
     kind      = "Group"
-    name      = "eks-readonly-group"
+    name      = "eks-developer-group"
     api_group = "rbac.authorization.k8s.io"
   }
 }
- 
