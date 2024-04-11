@@ -74,7 +74,7 @@ kubectl get svc
 - Go to **Hosted Zones**
   - Click on **yourdomain.com** (in my case stacksimplify.com)
 - Create a **Record Set**
-  - **Name:** ssldemo101.stacksimplify.com
+  - **Name:** ssldemo101.vardhmangarmants.store
   - **Alias:** yes
   - **Alias Target:** Copy our ALB DNS Name here (Sample: ssl-ingress-551932098.us-east-1.elb.amazonaws.com)
   - Click on **Create**
