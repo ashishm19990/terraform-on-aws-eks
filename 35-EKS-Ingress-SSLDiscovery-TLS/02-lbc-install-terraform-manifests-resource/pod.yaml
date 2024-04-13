@@ -1,0 +1,196 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
+  creationTimestamp: "2024-04-10T07:26:01Z"
+  generateName: aws-load-balancer-controller-5754d479cc-
+  labels:
+    app.kubernetes.io/instance: aws-load-balancer-controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+    pod-template-hash: 5754d479cc
+  name: aws-load-balancer-controller-5754d479cc-2rrth
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: aws-load-balancer-controller-5754d479cc
+    uid: 5747ccd2-b422-45ce-82a7-95f81f05d315
+  resourceVersion: "16749"
+  uid: 0513ef11-fba7-4ccb-bcf6-26d2b736a3ac
+spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - aws-load-balancer-controller
+          topologyKey: kubernetes.io/hostname
+        weight: 100
+  containers:
+  - args:
+    - --cluster-name=inboxable-dev-eksdemo1
+    - --ingress-class=alb
+    - --aws-region=us-east-1
+    - --aws-vpc-id=vpc-051038e36b6e4b6d3
+    env:
+    - name: AWS_STS_REGIONAL_ENDPOINTS
+      value: regional
+    - name: AWS_DEFAULT_REGION
+      value: us-east-1
+    - name: AWS_REGION
+      value: us-east-1
+    - name: AWS_ROLE_ARN
+      value: arn:aws:iam::567344542386:role/inboxable-dev-lbc-iam-role
+    - name: AWS_WEB_IDENTITY_TOKEN_FILE
+      value: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
+    image: 602401143452.dkr.ecr.us-east-1.amazonaws.com/amazon/aws-load-balancer-controller:v2.7.2
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 2
+      httpGet:
+        path: /healthz
+        port: 61779
+        scheme: HTTP
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 10
+    name: aws-load-balancer-controller
+    ports:
+    - containerPort: 9443
+      name: webhook-server
+      protocol: TCP
+    - containerPort: 8080
+      name: metrics-server
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 2
+      httpGet:
+        path: /readyz
+        port: 61779
+        scheme: HTTP
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 10
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /tmp/k8s-webhook-server/serving-certs
+      name: cert
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-tgxp8
+      readOnly: true
+    - mountPath: /var/run/secrets/eks.amazonaws.com/serviceaccount
+      name: aws-iam-token
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: ip-10-0-1-129.ec2.internal
+  preemptionPolicy: PreemptLowerPriority
+  priority: 2000000000
+  priorityClassName: system-cluster-critical
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 65534
+  serviceAccount: aws-load-balancer-controller
+  serviceAccountName: aws-load-balancer-controller
+  terminationGracePeriodSeconds: 10
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: aws-iam-token
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          audience: sts.amazonaws.com
+          expirationSeconds: 86400
+          path: token
+  - name: cert
+    secret:
+      defaultMode: 420
+      secretName: aws-load-balancer-tls
+  - name: kube-api-access-tgxp8
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-04-10T07:26:03Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2024-04-10T07:26:01Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-04-10T07:26:21Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-04-10T07:26:21Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-04-10T07:26:01Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://53a882c81d5d1a429ac081920c29add0c51f2cf827673437de5f3394e6b6bbea
+    image: 602401143452.dkr.ecr.us-east-1.amazonaws.com/amazon/aws-load-balancer-controller:v2.7.2
+    imageID: 602401143452.dkr.ecr.us-east-1.amazonaws.com/amazon/aws-load-balancer-controller@sha256:1a23835ccbdffc33f1641b4fb77569a8751b1787842f1309bfc46cbe28ec84cc
+    lastState: {}
+    name: aws-load-balancer-controller
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2024-04-10T07:26:02Z"
+  hostIP: 10.0.1.129
+  hostIPs:
+  - ip: 10.0.1.129
+  phase: Running
+  podIP: 10.0.1.178
+  podIPs:
+  - ip: 10.0.1.178
+  qosClass: BestEffort
+  startTime: "2024-04-10T07:26:01Z"
