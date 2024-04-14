@@ -1,0 +1,51 @@
+https://github.com/kubernetes-sigs/aws-iam-authenticator/tree/master
+
+# Describe Cluster
+aws eks --region us-east-1 describe-cluster --name inboxable-dev-eksdemo1 --query cluster.status
+
+# get your account ID
+ACCOUNT_ID=$(aws sts get-caller-identity --output text --query 'Account')
+
+# define a role trust policy that opens the role to users in your account (limited by IAM policy)
+POLICY=$(echo -n '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::'; echo -n "$ACCOUNT_ID"; echo -n ':root"},"Action":"sts:AssumeRole","Condition":{}}]}')
+
+echo $ACCOUNT_ID
+echo $POLICY
+
+# create a role named KubernetesAdmin (will print the new role's ARN)
+aws iam create-role \
+  --role-name eks-admin-role \
+  --description "Kubernetes administrator role (for AWS IAM Authenticator for Kubernetes)." \
+  --assume-role-policy-document "$POLICY" \
+  --output text \
+  --query 'Role.Arn'
+
+  arn:aws:iam::567344542386:role/eks-admin-role
+
+{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::567344542386:root"},"Action":"sts:AssumeRole","Condition":{}}]}
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {"AWS": "arn:aws:iam::567344542386:root"},
+      "Action": "sts:AssumeRole",
+      "Condition": {}    
+    }
+  ]
+}
+
+cd iam-files
+aws iam put-role-policy --role-name eks-admin-role --policy-name eks-full-access-policy --policy-document file://eks-full-access-policy.json
+
+Group Role Policy
+
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole",
+    "Resource": "arn:aws:iam::account-id:role/Test*"
+  }
+}

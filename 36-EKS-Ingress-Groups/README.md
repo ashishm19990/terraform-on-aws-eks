@@ -55,9 +55,9 @@ Observation:
 ## Step-07: Verify by accessing in browser
 ```t
 # Web URLs
-http://ingress-groups-demo601.stacksimplify.com/app1/index.html
-http://ingress-groups-demo601.stacksimplify.com/app2/index.html
-http://ingress-groups-demo601.stacksimplify.com
+http://ingress-groups-demo601.vardhmangarmants.store/app1/index.html
+http://ingress-groups-demo601.vardhmangarmants.store/app2/index.html
+http://ingress-groups-demo601.vardhmangarmants.store
 ```
 
 ## Step-08: Clean-Up

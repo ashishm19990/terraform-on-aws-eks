@@ -117,7 +117,7 @@ kubectl get nodes -o wide
 ```t
 # List Fargate Profiles
 aws eks list-fargate-profiles --cluster <CLUSTER_NAME>
-aws eks list-fargate-profiles --cluster hr-dev-eksdemo1
+aws eks list-fargate-profiles --cluster inboxable-dev-eksdemo1
 ```
 ## Step-09: Review aws-auth ConfigMap for Fargate Profiles related Entry
 - When AWS Fargate Profile is created on EKS Cluster, `aws-auth` configmap is updated in EKS Cluster with the IAM Role we are using for Fargate Profiles. 

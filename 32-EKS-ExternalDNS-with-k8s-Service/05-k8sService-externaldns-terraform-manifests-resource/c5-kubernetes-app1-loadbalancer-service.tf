@@ -3,7 +3,7 @@ resource "kubernetes_service_v1" "myapp1_np_service" {
   metadata {
     name = "app1-nginx-loadbalancer-service"
     annotations = {
-      "service.beta.kubernetes.io/aws-load-balancer-type"             = "alb"
+      "service.beta.kubernetes.io/aws-load-balancer-type"             = "external"
       "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "tcp"
       "service.beta.kubernetes.io/aws-load-balancer-scheme"           = "internet-facing"
       "alb.ingress.kubernetes.io/healthcheck-path"                    = "/app1/index.html"
